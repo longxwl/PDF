@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>绩效评分问卷</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    fieldset { margin-bottom: 20px; }
+    label { display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>绩效评分问卷</h1>
+  <form id="evaluationForm">
+    <fieldset>
+      <legend>产线视角评估</legend>
+      <label>被评估人：<input type="text" name="production_person" required></label>
+      <label>评估等级：
+        <select name="production_grade" id="production_grade">
+          <option value="A">A</option>
+          <option value="B" selected>B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </label>
+      <label>理由：
+        <textarea name="production_reason" id="production_reason"></textarea>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>职能视角评估</legend>
+      <label>被评估人：<input type="text" name="function_person" required></label>
+      <label>评估等级：
+        <select name="function_grade" id="function_grade">
+          <option value="A">A</option>
+          <option value="B" selected>B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </label>
+      <label>理由：
+        <textarea name="function_reason" id="function_reason"></textarea>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>协同视角评估</legend>
+      <label>被评估人：<input type="text" name="cooperation_person" required></label>
+      <label>评估等级：
+        <select name="cooperation_grade" id="cooperation_grade">
+          <option value="A">A</option>
+          <option value="B" selected>B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </label>
+      <label>理由：
+        <textarea name="cooperation_reason" id="cooperation_reason"></textarea>
+      </label>
+    </fieldset>
+
+    <button type="submit">提交</button>
+  </form>
+
+  <script>
+    function setupSection(gradeId, reasonId) {
+      const grade = document.getElementById(gradeId);
+      const reason = document.getElementById(reasonId);
+      function updateRequirement() {
+        if (grade.value !== 'B') {
+          reason.required = true;
+        } else {
+          reason.required = false;
+        }
+      }
+      grade.addEventListener('change', updateRequirement);
+      updateRequirement();
+    }
+
+    setupSection('production_grade', 'production_reason');
+    setupSection('function_grade', 'function_reason');
+    setupSection('cooperation_grade', 'cooperation_reason');
+
+    document.getElementById('evaluationForm').addEventListener('submit', function (e) {
+      if (!this.checkValidity()) {
+        e.preventDefault();
+        alert('请完整填写所有必填项');
+      }
+    });
+  </script>
+</body>
+</html>
